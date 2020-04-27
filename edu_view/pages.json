@@ -1,0 +1,117 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"app-plus": {"titleNView": false},
+				"mp-weixin": {"navigationStyle": "custom"}
+			}
+		}
+	    ,{
+            "path" : "components/tab/tab",
+            "style" : {}
+        }
+        ,{
+            "path" : "components/class/class",
+            "style" : {}
+        }
+        ,{
+            "path" : "components/hot/hot",
+            "style" : {}
+        }
+        ,{
+            "path" : "components/teacher/teacher",
+            "style" : {}
+        }
+        ,{
+            "path" : "components/student/student",
+            "style" : {}
+        }
+        ,{
+            "path" : "pagesA/community/community",
+            "style" : {
+				"enablePullDownRefresh": true,
+				"navigationBarTitleText": "碎片"
+			}
+        }
+        ,{
+            "path" : "pagesA/article/article",
+            "style" : {
+				"app-plus": {"titleNView": false}
+			}
+        }
+        ,{
+            "path" : "pagesB/my/my",
+            "style" : {
+				"app-plus": {"titleNView": false},
+				"mp-weixin": {"navigationStyle": "custom"}
+			}
+        }
+        ,{
+            "path" : "pagesB/setting/setting",
+            "style" : {
+            	"app-plus": {"titleNView": false},
+            	"mp-weixin": {"navigationStyle": "custom"}
+            }
+        }
+        ,{
+            "path" : "pagesB/setting/presetting",
+            "style" : {
+            	"app-plus": {"titleNView": false},
+            	"mp-weixin": {"navigationStyle": "custom"}
+            }
+        }
+        ,{
+            "path" : "components/photo/photo",
+            "style" : {}
+        }
+        ,{
+            "path" : "components/form/form",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/teacher_detail/teacher_detail",
+            "style" : {
+				"app-plus": {"titleNView": false},
+				"mp-weixin": {"navigationStyle": "custom"}
+			}
+        }
+        ,{
+            "path" : "pagesC/login/login",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/login/login",
+            "style" : {}
+        }
+    ],
+	"globalStyle": {
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "EDU",
+		"navigationBarBackgroundColor": "#000",
+		"backgroundColor": "#000"
+	},
+	"tabBar": {
+			"color": "#FFFFFF",
+			"selectedColor": "#1eb2a6",
+			"borderStyle": "black",
+			"backgroundColor": "#000",
+			"list": [{
+					"pagePath": "pages/index/index",
+					"iconPath": "static/home.png",
+					"selectedIconPath": "static/homeHL.png",
+					"text": "首页"
+				}, {
+					"pagePath": "pagesA/community/community",
+					"iconPath": "static/community.png",
+					"selectedIconPath": "static/communityHL.png",
+					"text": "社区"
+				}, {
+					"pagePath": "pagesB/my/my",
+					"iconPath": "static/my.png",
+					"selectedIconPath": "static/myHL.png",
+					"text": "我的"
+				}
+			]
+		}
+}
