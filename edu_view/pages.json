@@ -84,6 +84,14 @@
             "path" : "pages/login/login",
             "style" : {}
         }
+        ,{
+            "path" : "pages/new_detail/new_detail",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/course_detail/course_detail",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
