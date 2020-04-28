@@ -1,7 +1,18 @@
 import axios from 'axios'
+let storage = window.localStorage;
+let token = storage.getItem('token')
+console.log(token)
 
 let baseURL = process.env.NODE_ENV==='development'?'/api/admin':'/admin'
 const instance = axios.create({
+    baseURL: baseURL,
+    timeout: 5000
+})
+
+const instanceAdmin = axios.create({
+    headers: {
+        'Authorization': storage.getItem('token'),
+    },
     baseURL: baseURL,
     timeout: 5000
 })
@@ -18,4 +29,7 @@ instance.interceptors.response.use(function(response) {
     return Promise.reject(err)
 })
 
-export default instance
+export {
+    instance,
+    instanceAdmin
+} 

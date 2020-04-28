@@ -1,11 +1,34 @@
 const Common = require('./common')
 const Admin = require('../Models/admin')
+const jwt = require('jsonwebtoken');
 module.exports = {
     //主页
     index: async ctx => {
-        await ctx.render('index',{
-
+       console.log(ctx.request.header.authorization)
+       let token = ctx.request.header.authorization
+       let payload = jwt.verify(token, 'secret', function (err, decode) {
+            if (err) {
+                if(err.name == 'TokenExpiredError'){//token过期
+                    let str = {
+                        iat:1,
+                        exp:0,
+                        msg: 'token过期'
+                    }
+                    return str;
+                }else if(err.name == 'JsonWebTokenError'){//无效的token
+                    let str = {
+                        iat:1,
+                        exp:0,
+                        msg: '无效的token'
+                    }
+                    return str;
+                }
+            }else{
+                return decoded;
+            }
         })
+      return ctx.body = {payload}
+
     },
     // 注册
     sign_up: async ctx => {
@@ -39,8 +62,11 @@ module.exports = {
       promise.then(
           isMatch => {
               if(isMatch) {
-                  ctx.session.user = user
-                  ctx.body = {'msg':'登录成功','status':'0'}
+                  let token = jwt.sign(user, 'secret', {
+                    expiresIn: 60*60*1
+                  });
+                  ctx.session.admin = user
+                  ctx.body = {'msg':'登录成功','status':'0','token': token}
               }
               else {
                   ctx.body = {'msg':'密码错误','status':'2'}
@@ -48,6 +74,14 @@ module.exports = {
           }
       )
       return promise
-    }
+    },
+    //验证登陆中间件
+    signRequired: async(ctx,next) => {
+        let admin = ctx.session.admin
+        if(!admin){
+            return ctx.redirect('/admin/sign_in')
+        }
+        await next()
+    },
 
 }
