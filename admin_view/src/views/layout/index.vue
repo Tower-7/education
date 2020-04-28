@@ -21,7 +21,9 @@ export default {
             let data = {
                 test: 'test'
             }
-            this.$store.dispatch('test',data)
+            this.$store.dispatch('test',data).then(res=>{
+                console.log(res)
+            })
         }
        
     }

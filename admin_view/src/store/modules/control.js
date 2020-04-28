@@ -9,7 +9,6 @@ const mutations ={
 const actions = {
     test({ commit },o){
         return new Promise((resolve,reject)=>{
-            console.log(o)
             apiControl.test(o).then(res=>{
                resolve(res)
             }).catch(err=>{

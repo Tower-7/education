@@ -1,7 +1,5 @@
 import axios from 'axios'
-let storage = window.localStorage;
-let token = storage.getItem('token')
-console.log(token)
+import { getToken } from "../utils/userStorage";
 
 let baseURL = process.env.NODE_ENV==='development'?'/api/admin':'/admin'
 const instance = axios.create({
@@ -9,13 +7,6 @@ const instance = axios.create({
     timeout: 5000
 })
 
-const instanceAdmin = axios.create({
-    headers: {
-        'Authorization': storage.getItem('token'),
-    },
-    baseURL: baseURL,
-    timeout: 5000
-})
 
 instance.interceptors.request.use(function(config){
     return config
@@ -25,6 +16,26 @@ instance.interceptors.request.use(function(config){
 
 instance.interceptors.response.use(function(response) {
     return response.data;
+},function(err) {
+    return Promise.reject(err)
+})
+
+const instanceAdmin = axios.create({
+    headers: {
+        'Authorization': getToken(),
+    },
+    baseURL: baseURL,
+    timeout: 5000
+})
+
+instanceAdmin.interceptors.request.use(function(config){
+    return config
+},function(err) {
+    return Promise.reject(err)
+})
+
+instanceAdmin.interceptors.response.use(function(res) {
+    return res.data;
 },function(err) {
     return Promise.reject(err)
 })

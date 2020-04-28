@@ -9,7 +9,6 @@ function test(data){
             reject(err)
         })
     })
-   
 }
 
 export default  {
