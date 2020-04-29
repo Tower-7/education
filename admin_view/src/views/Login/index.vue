@@ -110,6 +110,7 @@ export default {
                             message: res.msg,
                             type: 'success'
                         });
+                        this.$router.push({name:'control'})
                     }
                     else{
                         this.$message.error(res.msg);

@@ -53,6 +53,7 @@ module.exports = {
     //验证登陆中间件
     signRequired: async(ctx,next) => {
         let token = ctx.request.header.authorization
+        console.log(token)
         jwt.verify(token, 'secret', function (err) {
             if (err) {
                 return ctx.body = {'msg':'登录过期，请重新登录!','status':'4'}

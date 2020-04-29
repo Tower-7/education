@@ -10,4 +10,9 @@ export function getToken(){
     return storage.getItem(adminToken)
 }
 
+export function rmToken(){
+    return storage.removeItem(adminToken)
+}
+
+
 

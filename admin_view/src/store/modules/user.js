@@ -15,6 +15,7 @@ const actions = {
             apiUser.sign_in(data).then(res=>{
                 commit('userInfo',data)
                 setToken(res.token)
+                console.log(setToken)
                 resolve(res)
             })
         })

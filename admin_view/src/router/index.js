@@ -1,8 +1,9 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Login from "../views/Login";
-import Admin from "../views/layout";
-import { getToken } from "../utils/userStorage";
+import Control from "@/views/control";
+import Layout from "@/views/Layout";
+import { getToken, rmToken } from "../utils/userStorage";
 
 
 Vue.use(VueRouter);
@@ -10,18 +11,23 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    redirect: "Login"
+    redirect: "login"
   },
   {
     path: "/login",
-    name: "Login",
+    name: "login",
     component: Login,
   },
   {
-    path: "/Admin",
-    name: "admin",
-    component: Admin,
+    path: "/control",
+    name: "control",
+    component: Control,
   },
+  {
+    path: '/layout',
+    name: 'layout',
+    component: Layout
+  }
 ];
 
 const router = new VueRouter({
@@ -32,8 +38,8 @@ const whiteRouter = ['/login']; // indexOf方法，判断数组中是否存在�
 // 路由守卫
 router.beforeEach((to, from, next) => {
     if(getToken()){
-      if(to.path === '/login'){
-          // removeToKen();
+        if(to.path === '/login'){
+          rmToken();
           // removeUserName();
           // store.commit("app/SET_TOKEN", '');
           // store.commit("app/SET_USERNAME", '');
