@@ -1,26 +1,14 @@
 <template>
-    <div id="index">
-       
+    <div id="layout" class="open">
+        <LayoutHeader />
     </div>
 </template>
 <script>
-import { sign_up } from '../../api/login.js';
+import LayoutHeader from './Components/Header'
 export default {
-    name: 'index',
-    data(){
-        
-    },
-    created(){
-
-    },
-    methods: {
-        
-    }
-
+    name: 'layout',
+    components: {LayoutHeader},
+  
 }
 </script>
-<style lang="scss" scoped>
-  
-
-</style>
-
+<style lang="scss" scoped></style>

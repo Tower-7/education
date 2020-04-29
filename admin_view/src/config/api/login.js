@@ -1,5 +1,5 @@
 
-import instance from '../../utils/request';
+import {instance} from '../../utils/request';
 
 function sign_up(data){
     return new Promise((resolve,reject)=>{

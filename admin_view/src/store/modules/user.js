@@ -1,12 +1,11 @@
 import { apiUser } from '../../config/';
-import cookie from 'cookie_js'
+import { setToken } from '@/utils/userStorage.js'
 const state = {
     user:{}
 }
 const mutations ={
     userInfo(state,o){
         state.user = o
-        cookie.set('user',o)
     }
 }
 
@@ -15,6 +14,8 @@ const actions = {
         return new Promise((resolve,reject)=>{
             apiUser.sign_in(data).then(res=>{
                 commit('userInfo',data)
+                setToken(res.token)
+                console.log(setToken)
                 resolve(res)
             })
         })
