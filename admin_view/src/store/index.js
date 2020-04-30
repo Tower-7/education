@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import app from './modules/app'
 import user from './modules/user'
 import control from './modules/control'
 
@@ -10,6 +11,7 @@ export default new Vuex.Store({
   mutations: {},
   actions: {},
   modules: {
+    app,
     user,
     control
   }

@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Login from "../views/Login";
 import Control from "@/views/control";
 import Layout from "@/views/Layout";
+import Info from "@/views/Info";
 import { getToken, rmToken } from "../utils/userStorage";
 
 
@@ -39,6 +40,11 @@ const routes = [
     path: '/layout',
     name: 'layout',
     component: Layout
+  },
+  {
+    path: '/info',
+    name: 'info',
+    component: Info
   }
 ];
 

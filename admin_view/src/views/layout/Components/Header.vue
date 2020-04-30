@@ -1,8 +1,8 @@
 <template>
   <div id="header-wrap">
     <el-row>
-        <el-col :span="12">
-            <div class="menu">
+        <el-col :span="12" class="webInfo">
+            <div class="menu" @click="chNav">
                 <span class="icon iconfont">&#xe625;</span>
             </div>
             <div class="logo">
@@ -29,12 +29,13 @@ export default {
     name: 'layoutHeader',
     data () {
       return {
-        circleUrl: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
-        size: "medium"
+        
       }
     },
     methods: {
-        
+        chNav(){
+            this.$store.commit('setCollapse')
+        }
        
     }
 }
@@ -45,9 +46,10 @@ export default {
         line-height: 50px;
         background-color: #24292e;
         color:#fff;
+        overflow: hidden;
         .menu {
             float: left;
-            width: 50px;
+            width: 64px;
             height: 50px;
             background-color: #8e8c8c;
             text-align: center;
