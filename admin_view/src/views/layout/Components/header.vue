@@ -10,9 +10,16 @@
             </div>
         </el-col>
         <el-col :span="12">
-            <div class="avatar">
-                <el-avatar :size="size" :src="circleUrl"></el-avatar>
+            <div class="info">
+                <div class="username pull-left">username</div>
+                <div class="avatar pull-left">
+                    <img src="@/assets/images/logo.png" alt="">
+                </div>
+                <div class="logout pull-left">
+                    <span class="icon iconfont">&#xe64b;</span>
+                </div>
             </div>
+            
         </el-col>
     </el-row>
   </div>
@@ -39,7 +46,7 @@ export default {
         background-color: #24292e;
         color:#fff;
         .menu {
-            display: inline-block;
+            float: left;
             width: 50px;
             height: 50px;
             background-color: #8e8c8c;
@@ -58,6 +65,34 @@ export default {
                 font-size: 30px;
             }
             
+        }
+        .info{
+            float: right;
+            .pull-left{
+                float: left;
+                margin: 0 10px;
+            }
+            .username{
+                cursor: default;
+            }
+            .avatar img {
+                width: 30px;
+                margin-top: 10px;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+            .logout {
+                width: 50px;
+                height: 50px;
+                background-color: #8e8c8c;
+                margin-left: 40px;
+                margin-right: 0;
+                text-align: center;
+                cursor: pointer;
+                span {
+                    font-size: 20px;
+                }
+            }
         }
     }
     

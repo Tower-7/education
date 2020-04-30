@@ -11,6 +11,29 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-add1:before {
+  content: "\e600";
+}
+
+.icon-More:before {
+  content: "\e609";
+}
+
+.icon-pic2:before {
+  content: "\e602";
+}
+
+.icon-log-out:before {
+  content: "\e64b";
+}
 
 .icon-logo:before {
   content: "\e63c";

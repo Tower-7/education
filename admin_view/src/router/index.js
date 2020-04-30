@@ -21,7 +21,19 @@ const routes = [
   {
     path: "/control",
     name: "control",
-    component: Control,
+    redirect: "index",
+    meta: {
+      name: "控制台",
+      icon: 'console'
+    },
+    component: Layout,
+    children:[
+      {
+        path: '/index',
+        name: 'index',
+        component: Control
+      }
+    ]
   },
   {
     path: '/layout',
