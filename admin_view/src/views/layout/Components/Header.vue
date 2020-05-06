@@ -2,11 +2,12 @@
   <div id="header-wrap">
     <el-row>
         <el-col :span="12" class="webInfo">
-            <div class="menu" @click="chNav">
-                <span class="icon iconfont">&#xe625;</span>
-            </div>
+            
             <div class="logo">
                 <span class="icon iconfont">&#xe63c;</span>
+            </div>
+            <div class="menu" @click="chNav">
+                <span class="icon iconfont">&#xe625;</span>
             </div>
         </el-col>
         <el-col :span="12">
@@ -48,20 +49,26 @@ export default {
         color:#fff;
         overflow: hidden;
         .menu {
-            float: left;
-            width: 64px;
-            height: 50px;
-            background-color: #8e8c8c;
+            display: inline-block;
+            margin-top: 10px;
+            width: 30px;
+            height: 30px;
+            background-color: #5a5858;
             text-align: center;
+            line-height: 30px;
+            border-radius: 5px;
             cursor: pointer;
             span{
                 font-size: 20px;
             }
         }
+        .menu:hover {
+            background-color: #8e8c8c;
+        }
         .logo {
             display: inline-block;
             height: 50px;
-            margin-left: 10px;
+            margin-right: 30px;
             cursor: pointer;
             span {
                 font-size: 30px;

@@ -8,7 +8,6 @@ module.exports = {
 		let putPolicy = new qiniu.rs.PutPolicy(options);
 		let uploadToken = putPolicy.uploadToken(mac);
 		let key = sha1(Math.random().toString(36).substr(2));
-		
 		return ctx.body={
 			key,
 			uploadToken

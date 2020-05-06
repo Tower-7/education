@@ -4,6 +4,7 @@ import Login from "../views/Login";
 import Control from "@/views/control";
 import Layout from "@/views/Layout";
 import Info from "@/views/Info";
+import Detail from "@/views/Info/detailed";
 import { getToken, rmToken } from "../utils/userStorage";
 
 
@@ -22,7 +23,7 @@ const routes = [
   {
     path: "/control",
     name: "control",
-    redirect: "index",
+    redirect: "detail",
     meta: {
       name: "控制台",
       icon: 'console'
@@ -30,10 +31,10 @@ const routes = [
     component: Layout,
     children:[
       {
-        path: '/index',
-        name: 'index',
-        component: Control
-      }
+        path: '/detail',
+        name: 'detail',
+        component: Detail
+      },
     ]
   },
   {
@@ -45,6 +46,10 @@ const routes = [
     path: '/info',
     name: 'info',
     component: Info
+  },{
+    path: '/detail',
+    name: 'detail',
+    component: Detail
   }
 ];
 

@@ -5,7 +5,7 @@ import { getToken } from "@/utils/userStorage";
 function test(data){
         console.log(getToken())
         return new Promise((resolve,reject)=>{
-        instanceAdmin.post('/index',data)
+        instanceAdmin.post('/admin/index',data)
         .then((res)=>{
             resolve(res)
         }).catch((err)=>{

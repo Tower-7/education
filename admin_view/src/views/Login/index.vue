@@ -121,12 +121,12 @@ export default {
 
                 })
             }else{
-            this.$store.dispatch('sign_up',this.ruleForm)
-              .then((res)=>{
-                  console.log(res)
-              }).catch((err)=>{
-                  console.log(err)
-              })
+                this.$store.dispatch('sign_up',this.ruleForm)
+                .then((res)=>{
+                    console.log(res)
+                }).catch((err)=>{
+                    console.log(err)
+                })
             }
             
           } else {

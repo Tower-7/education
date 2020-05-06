@@ -1,6 +1,7 @@
 import { SET_COLLAPSE } from '../mutation-types'
+import { apiApp } from '../../config/';
 const state = {
-    isCollapse: true
+    isCollapse: false
 }
 console.log(SET_COLLAPSE)
 const mutations = {
@@ -10,7 +11,16 @@ const mutations = {
 }
 
 const actions = {
-    
+    upload({ commit },o){
+        return new Promise((resolve,reject)=>{
+            apiApp.getToken().then((res)=>{
+                resolve(res)
+            })
+        }).then(res=>{
+            console.log(res)
+        })
+        
+    }
 }
 
 export default {

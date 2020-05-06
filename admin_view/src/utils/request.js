@@ -3,7 +3,7 @@ import { getToken } from "../utils/userStorage";
 import router from "../router";
 import { Message } from 'element-ui'
 
-let baseURL = process.env.NODE_ENV==='development'?'/api/admin':'/admin'
+let baseURL = process.env.NODE_ENV==='development'?'/api':''
 const instance = axios.create({
     baseURL: baseURL,
     timeout: 5000
