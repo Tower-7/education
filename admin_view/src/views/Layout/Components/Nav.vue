@@ -6,41 +6,31 @@
             class="el-menu-vertical-demo"
             @open="handleOpen"
             @close="handleClose"
-            background-color="#545c64"
-            text-color="#fff"
             :collapse="isCollapse"
             :style="{'min-width': isCollapse?'64px':'200px'}"
-            active-text-color="#ffd04b">
-            <el-submenu index="1">
-                <template slot="title">
-                <i class="el-icon-location"></i>
-                <span>导航一</span>
-                </template>
-                <el-menu-item-group>
-                <template slot="title">分组一</template>
-                <el-menu-item index="1-1">选项1</el-menu-item>
-                <el-menu-item index="1-2">选项2</el-menu-item>
-                </el-menu-item-group>
-                <el-menu-item-group title="分组2">
-                <el-menu-item index="1-3">选项3</el-menu-item>
-                </el-menu-item-group>
-                <el-submenu index="1-4">
-                <template slot="title">选项4</template>
-                <el-menu-item index="1-4-1">选项1</el-menu-item>
-                </el-submenu>
-            </el-submenu>
-            <el-menu-item index="2">
-                <i class="el-icon-menu"></i>
-                <span slot="title">导航二</span>
+            active-text-color="#fff">
+            <el-menu-item index="1">
+                <i class="el-icon-s-data"></i>
+                <span slot="title">概述</span>
             </el-menu-item>
-            <el-menu-item index="3" disabled>
-                <i class="el-icon-document"></i>
-                <span slot="title">导航三</span>
+            <el-submenu index="2">
+                <template slot="title">
+                <i class="el-icon-user-solid"></i>
+                <span>会员管理</span>
+                </template>
+                <el-menu-item index="2-1">会员列表</el-menu-item>
+                <el-menu-item index="2-2">教师列表</el-menu-item>
+                <el-menu-item index="2-3">学生列表</el-menu-item>
+            </el-submenu>
+            <el-menu-item index="3">
+                <i class="el-icon-tickets"></i>
+                <span slot="title">新闻列表</span>
             </el-menu-item>
             <el-menu-item index="4">
-                <i class="el-icon-setting"></i>
-                <span slot="title">导航四</span>
+                <i class="el-icon-reading"></i>
+                <span slot="title">课程列表</span>
             </el-menu-item>
+           
             </el-menu>
         </el-col>
     </div>
@@ -77,5 +67,18 @@ export default {
 <style lang="scss" scoped>
     .el-menu{
         height: calc(100vh - 50px);
+    }
+    .el-menu-item.is-active {
+        background-color: #009688 !important;
+    }
+    .el-menu-item:focus, .el-menu-item:hover{
+        color: #fff !important;
+        background-color: #009688 !important;
+    }
+    .el-menu-item:focus, .el-menu-item:hover .el-icon-menu{
+        color: #fff !important;
+    }
+    .el-menu-item-group__title{
+        padding: 0 !important;
     }
 </style>
