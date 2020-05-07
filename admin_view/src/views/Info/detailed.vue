@@ -1,5 +1,6 @@
 <template>
     <div class="detail-wrap">
+        <div class="submit" @click="submit()">发布</div>
         <el-col :span="20" class="wrap">
             <el-row>
                 <el-col :span="6">1</el-col>
@@ -7,10 +8,10 @@
             
                     <el-form ref="form" :model="form" label-width="80px">
                         <el-form-item label="活动名称" style="width:500px">
-                            <el-input v-model="form.name"></el-input>
+                            <el-input v-model="form.title"></el-input>
                         </el-form-item>
                     </el-form>
-                    <el-form ref="form" :model="form" label-width="80px">
+                    <el-form ref="form" :model="form" label-width="80px" >
                         <el-form-item label="封面" style="width:500px">
                             <el-upload
                             class="avatar-uploader"
@@ -22,14 +23,12 @@
                             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                             </el-upload>
                         </el-form-item>
-                        
                     </el-form>
                     
                     <div ref="editor"></div>
                 </el-col>
                 <el-col :span="6">1</el-col>
             </el-row>
-            <button v-on:click="getContent">查看内容</button>
         </el-col>
     </div>
 </template>
@@ -44,14 +43,7 @@
         return {
           editorContent: '',
           form: {
-            name: '',
-            region: '',
-            date1: '',
-            date2: '',
-            delivery: false,
-            type: [],
-            resource: '',
-            desc: '',
+            title: '',
            },
             imageUrl: ''
         }
@@ -156,11 +148,30 @@
                 this.$message.error('上传头像图片大小不能超过 2MB!');
                 }
                 return isJPG && isLt2M;
+            },
+            submit(){
+                let data = {
+                    title: this.form.title,
+                    content: this.editorContent
+                }
+                this.$store.dispatch('news_submit',data).then(res=>{
+                    console.log(res)
+                })
             }
       }
     }
 </script>
 <style lang="scss" scoped>
+    .submit {
+        position: fixed;
+        top: 100px;
+        right: 140px;
+        color: #fff;
+        background-color: #409EFF;
+        padding: 10px 50px;
+        cursor: pointer;
+        z-index: 10001;
+    }
     .wrap{
         height: calc(100vh - 50px);
         padding-top: 50px;
@@ -171,28 +182,30 @@
         min-width: 700px;
         padding: 50px;
         background-color: #fff;
+        
     }
-    .avatar-uploader .el-upload {
+    .avatar-uploader .avatar-uploader-icon {
         border: 1px dashed #d9d9d9;
         border-radius: 6px;
         cursor: pointer;
         position: relative;
         overflow: hidden;
     }
-    .avatar-uploader .el-upload:hover {
+    .avatar-uploader .avatar-uploader-icon:hover {
         border-color: #409EFF;
     }
     .avatar-uploader-icon {
         font-size: 28px;
         color: #8c939d;
-        width: 178px;
-        height: 178px;
-        line-height: 178px;
+        width: 220px;
+        height: 120px;
+        line-height: 120px;
         text-align: center;
     }
     .avatar {
-        width: 178px;
-        height: 178px;
+        width: 220px;
+        height: 120px;
         display: block;
     }
+    
 </style>

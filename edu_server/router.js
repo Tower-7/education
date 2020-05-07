@@ -40,6 +40,12 @@ module.exports = (app) => {
 	router.post('/admin/sign_in',Admin.sign_in) //管理员注册
 	router.post('/admin/index', Admin.signRequired, Admin.index) //后台首页
 
+	//发布文章
+	router.post('/admin/news_edit',Admin.news_edit) //编辑资料
+	router.post('/admin/news_submit',Admin.news_submit) //提交资料
+	router.post('/news_list',Admin.news_list) //资料列表
+	router.get('/news_detail/:id',Admin.news_detail) //资料列表
+
 	router.post('/upload',Common.upload)//上传
 
 	router.post('/qiniu',Qiniu.upload)

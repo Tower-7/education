@@ -1,5 +1,6 @@
 const Common = require('./common')
 const Admin = require('../Models/admin')
+const News = require('../Models/news')
 const jwt = require('jsonwebtoken');
 module.exports = {
     //主页
@@ -62,5 +63,17 @@ module.exports = {
             }
         })
     },
+    news_edit: async(ctx)=>{
+        await Common.update(ctx,News)
+    },
+    news_submit: async(ctx)=>{
+        await Common.update(ctx,News)
+    },
+    news_list: async(ctx)=>{
+        await Common.update(ctx,News)
+    },
+    news_detail: async(ctx)=>{
+        await Common.update(ctx,News)
+    }
 
 }
