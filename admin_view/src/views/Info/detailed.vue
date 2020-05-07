@@ -162,20 +162,22 @@
 </script>
 <style lang="scss" scoped>
     .wrap{
-        height: calc(100vh - 100px);
+        height: calc(100vh - 50px);
         padding-top: 50px;
-        overflow: scroll;
+        overflow-y: scroll;
         background-color: rgba(0, 0, 0, 0.5);
     }
     .content{
         min-width: 700px;
         padding: 50px;
         background-color: #fff;
-        .avatar-uploader .el-upload {
-        border: 1px dashed #d9d9d9 !important;
+    }
+    .avatar-uploader .el-upload {
+        border: 1px dashed #d9d9d9;
         border-radius: 6px;
         cursor: pointer;
         position: relative;
+        overflow: hidden;
     }
     .avatar-uploader .el-upload:hover {
         border-color: #409EFF;
@@ -193,6 +195,4 @@
         height: 178px;
         display: block;
     }
-    }
-    
 </style>
