@@ -1,13 +1,34 @@
 <template>
     <div class="detail-wrap">
-        <el-col :span="20">
-            <el-form ref="form" :model="form" label-width="80px">
-                <el-form-item label="活动名称" style="width:500px">
-                    <el-input v-model="form.name"></el-input>
-                </el-form-item>
-            </el-form>
-
-            <div ref="editor" style="text-align:left"></div>
+        <el-col :span="20" class="wrap">
+            <el-row>
+                <el-col :span="6">1</el-col>
+                <el-col :span="12" class="content">
+            
+                    <el-form ref="form" :model="form" label-width="80px">
+                        <el-form-item label="活动名称" style="width:500px">
+                            <el-input v-model="form.name"></el-input>
+                        </el-form-item>
+                    </el-form>
+                    <el-form ref="form" :model="form" label-width="80px">
+                        <el-form-item label="封面" style="width:500px">
+                            <el-upload
+                            class="avatar-uploader"
+                            action="https://jsonplaceholder.typicode.com/posts/"
+                            :show-file-list="false"
+                            :on-success="handleAvatarSuccess"
+                            :before-upload="beforeAvatarUpload">
+                            <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                            </el-upload>
+                        </el-form-item>
+                        
+                    </el-form>
+                    
+                    <div ref="editor"></div>
+                </el-col>
+                <el-col :span="6">1</el-col>
+            </el-row>
             <button v-on:click="getContent">查看内容</button>
         </el-col>
     </div>
@@ -15,6 +36,7 @@
 
 <script>
     import E from 'wangeditor'
+    import { qiniuUrl } from '../../config/local'
     // import Qiniu from 'qiniu'
     export default {
       name: 'editor',
@@ -29,8 +51,9 @@
             delivery: false,
             type: [],
             resource: '',
-            desc: ''
-           }
+            desc: '',
+           },
+            imageUrl: ''
         }
       },
       mounted() {
@@ -39,6 +62,25 @@
         editor.customConfig.onchange = (html) => {
           this.editorContent = html
         }
+        editor.customConfig.menus = [
+            'head',  // 标题
+            'bold',  // 粗体
+            'fontSize',  // 字号
+            'fontName',  // 字体
+            'italic',  // 斜体
+            'underline',  // 下划线
+            'strikeThrough',  // 删除线
+            'foreColor',  // 文字颜色
+            'backColor',  // 背景颜色
+            'link',  // 插入链接
+            'list',  // 列表
+            'justify',  // 对齐方式
+            'emoticon',  // 表情
+            'image',  // 插入图片
+            'table',  // 表格
+            'undo',  // 撤销
+            'redo'  // 重复
+        ]
         // 使用 base64 保存图片
         editor.customConfig.uploadImgShowBase64 = false
         
@@ -52,7 +94,7 @@
     
         // 编辑富文本
         if (this.editorContent) {
-        editor.txt.html(this.editorContent)
+            editor.txt.html(this.editorContent)
         }
         // 初始化
         this.uploadInit(editor)
@@ -69,11 +111,10 @@
             var textElemId = editor.textElemId
             // 创建上传对象
             this.$store.dispatch('upload').then(res => {
-                console.log(res)
                 var uploader = Qiniu.uploader({
                     runtimes: 'html5,flash,html4',    //上传模式,依次退化
                     browse_button: btnId,       //上传选择的点选按钮，**必需**
-                    uptoken: res.data.data,
+                    uptoken: res.uploadToken,
                     unique_names: true,
                     domain: 'http://phx1pmugn.bkt.clouddn.com/', //bucket 域名，下载资源时用到，**必需**
                     container: containerId,           //上传区域DOM ID，默认是browser_button的父元素，
@@ -92,18 +133,66 @@
                     init: {
                         'FileUploaded': function(up, file, info) {     
                         var domain = up.getOption('domain')
-                        var res = window.$.parseJSON(info)
-                        var sourceLink = domain + res.key //获取上传成功后的文件的Url
+                        let res = JSON.parse(info.response)
+                        var sourceLink = `${qiniuUrl}/${res.key}` //获取上传成功后的文件的Url
                         // 插入图片到editor
-                        editor.cmd.do('insertHtml', '<img src="' + sourceLink + '" style="max-width:100%;"/>')
+                        editor.cmd.do('insertHtml', '<img src="' + sourceLink + '" style="max-width:400px;"/>')
                         }
                     }
                 })
             })
+            },
+            handleAvatarSuccess(res, file) {
+                this.imageUrl = URL.createObjectURL(file.raw);
+            },
+            beforeAvatarUpload(file) {
+                const isJPG = file.type === 'image/jpeg';
+                const isLt2M = file.size / 1024 / 1024 < 2;
+
+                if (!isJPG) {
+                this.$message.error('上传头像图片只能是 JPG 格式!');
+                }
+                if (!isLt2M) {
+                this.$message.error('上传头像图片大小不能超过 2MB!');
+                }
+                return isJPG && isLt2M;
             }
       }
     }
 </script>
-
-<style scoped>
+<style lang="scss" scoped>
+    .wrap{
+        height: calc(100vh - 100px);
+        padding-top: 50px;
+        overflow: scroll;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+    .content{
+        min-width: 700px;
+        padding: 50px;
+        background-color: #fff;
+        .avatar-uploader .el-upload {
+        border: 1px dashed #d9d9d9 !important;
+        border-radius: 6px;
+        cursor: pointer;
+        position: relative;
+    }
+    .avatar-uploader .el-upload:hover {
+        border-color: #409EFF;
+    }
+    .avatar-uploader-icon {
+        font-size: 28px;
+        color: #8c939d;
+        width: 178px;
+        height: 178px;
+        line-height: 178px;
+        text-align: center;
+    }
+    .avatar {
+        width: 178px;
+        height: 178px;
+        display: block;
+    }
+    }
+    
 </style>

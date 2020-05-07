@@ -27,7 +27,7 @@ const actions = {
 					resolve(res)
 				}).catch((res)=>{
 					console.log(res)
-					let err = JSON.stringify(res)
+					let err = JSON.parse(res)
 					uni.showToast({
 					title: err,
 					icon: 'none',

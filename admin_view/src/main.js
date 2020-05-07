@@ -6,6 +6,8 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 
 Vue.use(ElementUI)
+Vue.use(qiniu)
+import * as qiniu from 'qiniu-js'
 Vue.config.productionTip = false;
 Vue.prototype.$store = store
 

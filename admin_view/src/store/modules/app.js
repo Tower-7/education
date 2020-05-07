@@ -16,10 +16,7 @@ const actions = {
             apiApp.getToken().then((res)=>{
                 resolve(res)
             })
-        }).then(res=>{
-            console.log(res)
         })
-        
     }
 }
 
