@@ -77,7 +77,9 @@ module.exports = {
 		return ctx.body = {status: 200,data: newsList}
     },
     news_detail: async(ctx)=>{
-        await Common.update(ctx,News)
+        let id = ctx.params.id
+		let news = await News.findById(News,id)
+		return ctx.body = {status: 200,data: news}
     }
 
 }

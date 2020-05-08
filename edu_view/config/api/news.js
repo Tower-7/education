@@ -26,7 +26,7 @@ function getNewsList(o){
 }
 
 
-function getDetailById(o){
+function getNewsById(o){
 	return new Promise((resolve,reject)=>{
 		uni.request({
 			url: `${detail_url}/${o}`,
@@ -42,5 +42,5 @@ function getDetailById(o){
 
 export default {
 	getNewsList,
-	getDetailById
+	getNewsById
 }

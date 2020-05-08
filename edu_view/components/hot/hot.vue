@@ -8,7 +8,7 @@
 			<view class="line-middle"></view>
 		</view>
 		<view class="line-h"></view>
-		<view class="news" v-for="(item,index) in newsList" :key="index">
+		<view class="news" v-for="(item,index) in newsList" :key="index"  @click="detail(item._id)">
 			<view class="user_info">
 				<image class="avatar" src="../../static/logo.png" mode=""></image>
 				<text>官方发布</text>
@@ -21,7 +21,7 @@
 					<text>{{item.title | maxLenghtFilter}}</text>
 				</view>
 				<view class="intro">
-					<text>我们不敢面对粗糙和衰老，以致无法</text>
+					<text>{{item.intro | maxLenghtFilter}}</text>
 				</view>
 			</view>
 			<view class="line-h"></view>
@@ -77,7 +77,15 @@
 					// _this.newsList = res
 					// console.log(_this.newsList)
 				})
-			}
+			},
+			detail(id){
+				this.$store.dispatch('getNewsById',id).then((res)=>{
+					uni.navigateTo({
+						url: `../../pages/new_detail/new_detail`
+					})
+				})
+				
+			},
 		},
 		filters:{
 			formatDate: (value)=> {

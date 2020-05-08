@@ -3,6 +3,7 @@ var mongoose = require('mongoose')
 var DbSchema = new mongoose.Schema({
 	title: String,
     cover: String,
+    intro: String,
     content: String,
 	meta: {
 		createAt: {

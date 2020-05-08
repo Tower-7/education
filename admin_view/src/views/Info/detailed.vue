@@ -3,11 +3,11 @@
         <div class="submit" @click="submit()">发布</div>
         <el-col :span="20" class="wrap">
             <el-row>
-                <el-col :span="6">1</el-col>
+                <el-col :span="6" class="space">1</el-col>
                 <el-col :span="12" class="content">
             
                     <el-form ref="form" :model="form" label-width="80px">
-                        <el-form-item label="活动名称" style="width:500px">
+                        <el-form-item label="标题" style="width:500px">
                             <el-input v-model="form.title"></el-input>
                         </el-form-item>
                     </el-form>
@@ -25,10 +25,15 @@
                             </el-upload>
                         </el-form-item>
                     </el-form>
+                    <el-form ref="form" :model="form" label-width="80px">
+                        <el-form-item label="简介" style="width:500px">
+                            <el-input v-model="form.intro"></el-input>
+                        </el-form-item>
+                    </el-form>
                     
                     <div ref="editor"></div>
                 </el-col>
-                <el-col :span="6">1</el-col>
+                <el-col :span="6" class="space">1</el-col>
             </el-row>
         </el-col>
     </div>
@@ -45,6 +50,7 @@
             editorContent: '',
             form: {
                 title: '',
+                intro: ''
             },
             imageUrl: '',
             uploadQiniuUrl:"https://upload.qiniup.com",
@@ -169,6 +175,7 @@
                 let data = {
                     title: this.form.title,
                     cover: this.imageUrl,
+                    intro: this.form.intro,
                     content: this.editorContent
                 }
                 this.$store.dispatch('news_submit',data).then(res=>{
@@ -188,6 +195,9 @@
         padding: 10px 50px;
         cursor: pointer;
         z-index: 10001;
+    }
+    .space{
+        color: transparent;
     }
     .wrap{
         height: calc(100vh - 50px);

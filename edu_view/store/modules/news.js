@@ -26,9 +26,13 @@ const actions = {
 		
 	},
 	getNewsById({commit},o){
-		apiNews.getNewsById(o).then((res)=>{
-			commit(NEWS_DETAIL,res)
+		return new Promise((resolve,reject)=>{
+			apiNews.getNewsById(o).then((res)=>{
+				commit(NEWS_DETAIL,res)
+				resolve(res)
+			})
 		})
+		
 	}
 }
 
