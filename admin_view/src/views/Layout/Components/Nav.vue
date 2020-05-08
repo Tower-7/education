@@ -8,7 +8,8 @@
             @close="handleClose"
             :collapse="isCollapse"
             :style="{'min-width': isCollapse?'64px':'200px'}"
-            active-text-color="#fff">
+            active-text-color="#fff"
+            router>
             <el-menu-item index="1">
                 <i class="el-icon-s-data"></i>
                 <span slot="title">概述</span>
@@ -22,7 +23,7 @@
                 <el-menu-item index="2-2">教师列表</el-menu-item>
                 <el-menu-item index="2-3">学生列表</el-menu-item>
             </el-submenu>
-            <el-menu-item index="3">
+            <el-menu-item :index="'news'">
                 <i class="el-icon-tickets"></i>
                 <span slot="title">新闻列表</span>
             </el-menu-item>
@@ -41,7 +42,7 @@ export default {
     data() {
       return {
         // isCollapse:true
-
+        routers: ''
       };
     },
     computed: {
@@ -53,6 +54,8 @@ export default {
     },
     mounted() {
         console.log(this.$store.state.app.isCollapse)
+        // this.routers = this.$routers.options.routes
+        console.log(this.$router.options.routes)
     },
     methods: {
       handleOpen(key, keyPath) {

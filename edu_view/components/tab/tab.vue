@@ -65,7 +65,7 @@
 					name: '热点',
 					id: 'hot',
 				},{
-					name: '课程',
+					name: '文章',
 					id: 'class'
 				},{
 					name: '家教',
