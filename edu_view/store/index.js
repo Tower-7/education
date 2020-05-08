@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 
 import essay from './modules/essay'
 import user from './modules/user'
+import news from './modules/news'
 import common from './modules/common'
 
 Vue.use(Vuex)
@@ -14,6 +15,7 @@ const store = new Vuex.Store({
 	modules:{
 		essay,
 		user,
+		news,
 		common
 	}
 })

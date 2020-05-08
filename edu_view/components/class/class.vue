@@ -1,13 +1,5 @@
 <template>
 	<view class="teacher">
-		<view class="date">
-			<text>庚子鼠年&nbsp;{{ date | formatDate }}</text>
-		</view>
-		<view class="week">
-			<text>{{week}}&nbsp;/&nbsp;爱学习</text>
-			<view class="line-middle"></view>
-		</view>
-		<view class="line-h"></view>
 		<view class="news">
 			<view class="user_info">
 				<image class="avatar" src="../../static/logo.png" mode=""></image>
@@ -88,25 +80,6 @@
 			return {
 				date: new Date(),
 				week: '',
-				statusBarHeight:'',
-				tabIndex: 0,
-				scrollInto: "",
-				listHeight: '',
-				current: '',
-				tabBars:[{
-					name: '课程',
-					id: 'class'
-				},{
-					name: '热点',
-					id: 'hot',
-				},{
-					name: '家教',
-					id: 'teacher'
-				},
-				{
-					name: '学生',
-					id: 'student'
-				}]
 			}
 		},
 		mounted() {

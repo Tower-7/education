@@ -13,14 +13,14 @@
 		    </view>
 		</scroll-view>
 		<swiper class="swiper" :style="{height:listHeight}" @change="ontabchange" :current="current">
-			<swiper-item :height="listHeight">
-				<scroll-view class="list" scroll-y="true" :style="{height:listHeight}">
-					<Class></Class>
-				</scroll-view>
-			</swiper-item>
 			<swiper-item class="list">
 				<scroll-view scroll-y="true" :style="{height:listHeight}">
 					<Hot></Hot>
+				</scroll-view>
+			</swiper-item>
+			<swiper-item :height="listHeight">
+				<scroll-view class="list" scroll-y="true" :style="{height:listHeight}">
+					<Class></Class>
 				</scroll-view>
 			</swiper-item>
 			<swiper-item class="list">
@@ -62,11 +62,11 @@
 				listHeight: '',
 				current: '',
 				tabBars:[{
-					name: '课程',
-					id: 'class'
-				},{
 					name: '热点',
 					id: 'hot',
+				},{
+					name: '课程',
+					id: 'class'
 				},{
 					name: '家教',
 					id: 'teacher'

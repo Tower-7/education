@@ -70,7 +70,11 @@ module.exports = {
         await Common.update(ctx,News)
     },
     news_list: async(ctx)=>{
-        await Common.update(ctx,News)
+        let data = ctx.request.body
+		let start = data.start
+		let num = data.num
+		let newsList = await News.getList(News,start,num)
+		return ctx.body = {status: 200,data: newsList}
     },
     news_detail: async(ctx)=>{
         await Common.update(ctx,News)

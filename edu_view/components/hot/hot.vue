@@ -1,16 +1,24 @@
 <template>
 	<view class="hot">
-		<view class="news">
+		<view class="date">
+			<text>庚子鼠年&nbsp;{{ date | formatDate }}</text>
+		</view>
+		<view class="week">
+			<text>{{week}}&nbsp;/&nbsp;爱学习</text>
+			<view class="line-middle"></view>
+		</view>
+		<view class="line-h"></view>
+		<view class="news" v-for="(item,index) in newsList" :key="index">
 			<view class="user_info">
 				<image class="avatar" src="../../static/logo.png" mode=""></image>
 				<text>官方发布</text>
 			</view>
 			<view class="pic">
-				<image src="../../static/home/2.jpg" mode=""></image>
+				<image :src="item.cover" mode=""></image>
 			</view>
 			<view class="title_info">
 				<view class="title">
-					<text>关于春的八卦</text>
+					<text>{{item.title | maxLenghtFilter}}</text>
 				</view>
 				<view class="intro">
 					<text>我们不敢面对粗糙和衰老，以致无法</text>
@@ -23,83 +31,24 @@
 				<text class="icon">&#xe636;</text>
 			</view>
 		</view>
-		<view class="line-h-b"></view>
-		<view class="news">
-			<view class="user_info">
-				<image class="avatar" src="../../static/logo.png" mode=""></image>
-				<text>官方发布</text>
-			</view>
-			<view class="pic">
-				<image src="../../static/home/2.jpg" mode=""></image>
-			</view>
-			<view class="title_info">
-				<view class="title">
-					<text>关于春的八卦</text>
-				</view>
-				<view class="intro">
-					<text>我们不敢面对粗糙和衰老，以致无法</text>
-				</view>
-			</view>
-			<view class="line-h"></view>
-			<view class="set">
-				<text class="icon">&#xe63e;</text>
-				<text class="icon">&#xe657;</text>
-				<text class="icon">&#xe636;</text>
-			</view>
-		</view>
-		<view class="line-h-b"></view>
-		<view class="news">
-			<view class="user_info">
-				<image class="avatar" src="../../static/logo.png" mode=""></image>
-				<text>官方发布</text>
-			</view>
-			<view class="pic">
-				<image src="../../static/home/2.jpg" mode=""></image>
-			</view>
-			<view class="title_info">
-				<view class="title">
-					<text>关于春的八卦</text>
-				</view>
-				<view class="intro">
-					<text>我们不敢面对粗糙和衰老，以致无法</text>
-				</view>
-			</view>
-			<view class="line-h"></view>
-			<view class="set">
-				<text class="icon">&#xe63e;</text>
-				<text class="icon">&#xe657;</text>
-				<text class="icon">&#xe636;</text>
-			</view>
-		</view>
+		
 	</view>
 </template>
 
 <script>
+	import { mapState } from 'vuex'
 	export default {
 		data() {
 			return {
 				date: new Date(),
 				week: '',
-				statusBarHeight:'',
-				tabIndex: 0,
-				scrollInto: "",
-				listHeight: '',
-				current: '',
-				tabBars:[{
-					name: '课程',
-					id: 'class'
-				},{
-					name: '热点',
-					id: 'hot',
-				},{
-					name: '家教',
-					id: 'teacher'
-				},
-				{
-					name: '学生',
-					id: 'student'
-				}]
+				newList: []
 			}
+		},
+		computed:{
+			...mapState({
+				newsList: state => state.news.newsList,
+			}),
 		},
 		mounted() {
 			this.getInit()
@@ -119,6 +68,15 @@
 						
 				    }
 				});
+				let data ={
+					start: 0,
+					num: 20,
+				}
+				let _this = this
+				this.$store.dispatch('getNewsList',data).then(res=>{
+					// _this.newsList = res
+					// console.log(_this.newsList)
+				})
 			}
 		},
 		filters:{
@@ -130,7 +88,12 @@
 				let d = date.getDate();
 				d = d < 10 ? ('0' + d) : d;
 				return `${y}-${MM}-${d}`;
-			}
+			},
+			maxLenghtFilter:function(value){
+				if(value){
+					return value.substring(0,20) + '...'
+				}
+			},
 		}
 	}
 </script>
