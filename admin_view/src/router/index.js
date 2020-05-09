@@ -5,6 +5,7 @@ import Control from "@/views/control";
 import Layout from "@/views/Layout";
 import Info from "@/views/Info";
 import Detail from "@/views/Info/detailed";
+import Article from "@/views/Article";
 import News from "@/views/News";
 import { getToken, rmToken } from "../utils/userStorage";
 
@@ -14,26 +15,33 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    redirect: "login"
+    redirect: "login",
+    hidden: true,
   },
   {
     path: "/login",
     name: "login",
+    hidden: true,
     component: Login,
   },
   {
     path: "/control",
-    name: "control",
-    redirect: "detail",
+    name: "Control",
+    redirect: "index",
     meta: {
       name: "控制台",
+      icon: 'el-icon-s-data'
     },
     component: Layout,
     children:[
       {
-        path: '/detail',
-        name: 'detail',
-        component: Detail 
+        path: '/index',
+        name: 'index',
+        meta: {
+          keepAlive: true,
+          name: "首页"
+        },
+        component: Control 
       },
     ]
   },
@@ -42,7 +50,7 @@ const routes = [
     name: "news",
     redirect: "news",
     meta: {
-      name: "新闻",
+      name: "新闻列表",
     },
     component: Layout,
     children:[
@@ -54,19 +62,58 @@ const routes = [
     ]
   },
   {
-    path: '/layout',
-    name: 'layout',
-    component: Layout
+    path: "/article",
+    name: "Article",
+    redirect: "articleIndex",
+    meta: {
+      name: "文章列表",
+    },
+    component: Layout,
+    children:[
+      {
+        path: '/articleIndex',
+        name: 'ArticleIndex',
+        meta: {
+          name: '文章列表'
+        },
+        component: Article
+      },
+    ]
   },
   {
-    path: '/info',
-    name: 'info',
-    component: Info
-  },{
-    path: '/detail',
-    name: 'detail',
-    component: Detail
-  }
+    path: "/user",
+    name: "User",
+    meta: {
+      name: "会员管理",
+    },
+    component: Layout,
+    children:[
+      {
+        path: '/news',
+        name: 'news',
+        meta: {
+          name: "会员列表",
+        },
+        component: News
+      },{
+        path: '/news',
+        name: 'news',
+        meta: {
+          name: "教师列表",
+        },
+        component: News
+      },
+      {
+        path: '/detail',
+        name: 'detail',
+        meta: {
+          name: "学生列表",
+        },
+        component: Detail
+      }
+    ]
+  },
+ 
 ];
 
 const router = new VueRouter({

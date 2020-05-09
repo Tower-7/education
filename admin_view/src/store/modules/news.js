@@ -1,9 +1,12 @@
 import { apiNews } from '../../config/';
 const state = {
-    news:{}
+    news:{},
+    newsList: []
 }
 const mutations ={
-  
+    newsList(state,o){
+        state.newsList = o
+    }
 }
 
 const actions = {
@@ -13,6 +16,16 @@ const actions = {
                 resolve(res)
             })
         })
+    },
+    news_list({ commit },o){
+        return new Promise((resolve,reject)=>{
+            apiNews.news_list(o).then(res=>{
+                console.log(res);
+                commit('newsList',res.data)
+                resolve(res)
+            })
+        })
+        
     }
 }
 

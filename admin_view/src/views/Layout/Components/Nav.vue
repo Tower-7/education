@@ -10,28 +10,24 @@
             :style="{'min-width': isCollapse?'64px':'200px'}"
             active-text-color="#fff"
             router>
-            <el-menu-item index="1">
-                <i class="el-icon-s-data"></i>
-                <span slot="title">概述</span>
-            </el-menu-item>
-            <el-submenu index="2">
-                <template slot="title">
-                <i class="el-icon-user-solid"></i>
-                <span>会员管理</span>
-                </template>
-                <el-menu-item index="2-1">会员列表</el-menu-item>
-                <el-menu-item index="2-2">教师列表</el-menu-item>
-                <el-menu-item index="2-3">学生列表</el-menu-item>
-            </el-submenu>
-            <el-menu-item :index="'news'">
-                <i class="el-icon-tickets"></i>
-                <span slot="title">新闻列表</span>
-            </el-menu-item>
-            <el-menu-item index="4">
-                <i class="el-icon-reading"></i>
-                <span slot="title">课程列表</span>
-            </el-menu-item>
-           
+            <div v-for="(item,index) in routers" :key="index">
+                <div v-if="!item.hidden">
+                    <el-menu-item :index="item.path" v-if="item.children.length == 1">
+                        <i class="el-icon-s-data"></i>
+                        <span slot="title">{{item.meta.name}}</span>
+                    </el-menu-item>
+                    <el-submenu v-if="item.children.length != 1">
+                        <template slot="title">
+                            <i class="el-icon-user-solid"></i>
+                            <span>{{item.meta.name}}</span>
+                        </template>
+                        <el-menu-item 
+                        v-for="(subItem,index2) in item.children"
+                        :index="subItem.path"
+                        :key="index2">{{subItem.meta.name}}</el-menu-item>
+                    </el-submenu>
+                </div>
+            </div>
             </el-menu>
         </el-col>
     </div>
@@ -55,6 +51,7 @@ export default {
     mounted() {
         console.log(this.$store.state.app.isCollapse)
         // this.routers = this.$routers.options.routes
+        this.routers = this.$router.options.routes
         console.log(this.$router.options.routes)
     },
     methods: {
