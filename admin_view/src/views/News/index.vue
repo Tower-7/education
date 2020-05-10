@@ -34,7 +34,7 @@
                 </el-col>
                 <el-col :span="3">&nbsp;</el-col>
                 <el-col :span="3">
-                    <el-button type="danger" class="pull-right" style="width: 100%;" @click="dialog_info = true" >新增</el-button>
+                    <el-button type="danger" class="pull-right" style="width: 100%;" @click="add()" >新增</el-button>
                 </el-col>
             </el-row>
         </el-col>
@@ -46,16 +46,19 @@
                 <el-table
                     :data="tableData "
                     border>
+                    <el-table-column type="selection" width="55"></el-table-column>
+                    <el-table-column type="index" width="100" label="序号"></el-table-column>
                     <el-table-column width="150" label="发布时间">
                         <template slot-scope="scope">{{ scope.row.meta.updateAt| formatDate}}</template>
                     </el-table-column>
-                    <el-table-column prop="title" label="标题" width="150"> </el-table-column>
-                    <el-table-column prop="cover" label="封面" width="180"> 
-                        <template slot-scope="scope"><img :src="scope.row.cover" width="160" /></template>
+                    <el-table-column prop="title" label="标题" width="200"> </el-table-column>
+                    <el-table-column prop="cover" label="封面" width="200"> 
+                        <template slot-scope="scope"><img :src="scope.row.cover" width="180" /></template>
                     </el-table-column>
+                    <el-table-column prop="intro" label="简介" width="400"> </el-table-column>
                     <el-table-column fixed="right" label="操作" width="100">
                         <template slot-scope="scope">
-                            <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
+                            <el-button @click="detail(scope.row._id)" type="text" size="small">查看</el-button>
                             <el-button type="text" size="small">编辑</el-button>
                         </template>
                     </el-table-column>
@@ -83,6 +86,7 @@ export default {
                 init: ["id", "title"]
             }
         },
+        value: '',
         selectData: {},
         search_keyWork: '',
         tableData: []
@@ -102,7 +106,26 @@ export default {
                 _this.tableData = res.data
                 console.log(res.data)
             })
+        },
+        toggleSelection(rows) {
+        if (rows) {
+          rows.forEach(row => {
+            this.$refs.multipleTable.toggleRowSelection(row);
+          });
+        } else {
+          this.$refs.multipleTable.clearSelection();
         }
+      },
+      handleSelectionChange(val) {
+        this.multipleSelection = val;
+      },
+      add(){
+          this.$store.commit('newsDetail','')
+          this.$router.push('/detail/111')
+      },
+      detail(id){
+          this.$router.push(`/detail/${id}`)
+      }
     },
     filters: {
         formatDate: (value)=> {
@@ -130,10 +153,5 @@ export default {
 }
 .new-list>div{
     padding: 20px;
-}
-.label-wrap {
-    &.category { @include labelDom(left, 60, 40); }
-    &.date { @include labelDom(right, 93, 40); }
-    &.key-work { @include labelDom(right, 99, 40); }
 }
 </style>

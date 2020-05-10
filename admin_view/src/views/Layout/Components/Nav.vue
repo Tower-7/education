@@ -16,7 +16,7 @@
                         <i class="el-icon-s-data"></i>
                         <span slot="title">{{item.meta.name}}</span>
                     </el-menu-item>
-                    <el-submenu v-if="item.children.length != 1">
+                    <el-submenu index="index" v-if="item.children.length != 1">
                         <template slot="title">
                             <i class="el-icon-user-solid"></i>
                             <span>{{item.meta.name}}</span>

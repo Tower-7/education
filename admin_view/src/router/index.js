@@ -104,13 +104,32 @@ const routes = [
         component: News
       },
       {
-        path: '/detail',
-        name: 'detail',
+        path: '/student',
+        name: 'Student',
         meta: {
           name: "学生列表",
         },
         component: Detail
       }
+    ]
+  },
+  {
+    path: "/detail/:id",
+    name: "Detail",
+    redirect: "detailIndex/:id",
+    meta: {
+      name: "文章列表",
+    },
+    component: Layout,
+    children:[
+      {
+        path: '/detailIndex/:id',
+        name: 'detailIndex',
+        meta: {
+          name: '发布文章'
+        },
+        component: Detail
+      },
     ]
   },
  

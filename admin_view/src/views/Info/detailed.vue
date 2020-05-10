@@ -41,8 +41,8 @@
 
 <script>
     import E from 'wangeditor'
+	import { mapState } from 'vuex'
     import { qiniuUrl } from '../../config/local'
-    // import Qiniu from 'qiniu'
     export default {
       name: 'editor',
       data () {
@@ -52,6 +52,7 @@
                 title: '',
                 intro: ''
             },
+            news:{},
             imageUrl: '',
             uploadQiniuUrl:"https://upload.qiniup.com",
             qiniuData:{
@@ -61,54 +62,67 @@
         }
       },
       mounted() {
-        let _this = this
-        var editor = new E(this.$refs.editor)
-        editor.customConfig.onchange = (html) => {
-          this.editorContent = html
-        }
-        editor.customConfig.menus = [
-            'head',  // 标题
-            'bold',  // 粗体
-            'fontSize',  // 字号
-            'fontName',  // 字体
-            'italic',  // 斜体
-            'underline',  // 下划线
-            'strikeThrough',  // 删除线
-            'foreColor',  // 文字颜色
-            'backColor',  // 背景颜色
-            'link',  // 插入链接
-            'list',  // 列表
-            'justify',  // 对齐方式
-            'emoticon',  // 表情
-            'image',  // 插入图片
-            'table',  // 表格
-            'undo',  // 撤销
-            'redo'  // 重复
-        ]
-        // 使用 base64 保存图片
-        editor.customConfig.uploadImgShowBase64 = false
         
-        // 隐藏“网络图片”tab
-        editor.customConfig.showLinkImg = false
-
-        // 允许上传到七牛云存储
-        editor.customConfig.qiniu = true
-        
-        editor.create()
-    
-        // 编辑富文本
-        if (this.editorContent) {
-            editor.txt.html(this.editorContent)
-        }
-        // 初始化
-        this.uploadInit(editor)
       },
      created(){
          this.getToken()
+         this.getDetail(this.$route.params.id)
+         
      },
       methods: {
-          getContent: function () {
-                alert(this.editorContent)
+            getDetail(id){
+                let _this = this
+                this.$store.dispatch('news_detail',id).then(res=>{
+                    _this.news = res
+                    _this.form.title = _this.news.title
+                    _this.imageUrl = _this.news.cover
+                    _this.form.intro = _this.news.intro
+                    _this.editorContent = _this.news.content
+                    _this.createEditor()
+                })
+            },
+            createEditor(){
+                let _this = this
+                var editor = new E(this.$refs.editor)
+                editor.customConfig.onchange = (html) => {
+                this.editorContent = html
+                }
+                editor.customConfig.menus = [
+                    'head',  // 标题
+                    'bold',  // 粗体
+                    'fontSize',  // 字号
+                    'fontName',  // 字体
+                    'italic',  // 斜体
+                    'underline',  // 下划线
+                    'strikeThrough',  // 删除线
+                    'foreColor',  // 文字颜色
+                    'backColor',  // 背景颜色
+                    'link',  // 插入链接
+                    'list',  // 列表
+                    'justify',  // 对齐方式
+                    'emoticon',  // 表情
+                    'image',  // 插入图片
+                    'table',  // 表格
+                    'undo',  // 撤销
+                    'redo'  // 重复
+                ]
+                // 使用 base64 保存图片
+                editor.customConfig.uploadImgShowBase64 = false
+                
+                // 隐藏“网络图片”tab
+                editor.customConfig.showLinkImg = false
+
+                // 允许上传到七牛云存储
+                editor.customConfig.qiniu = true
+                
+                editor.create()
+            
+                // 编辑富文本
+                if (this.editorContent) {
+                    editor.txt.html(this.editorContent)
+                }
+                // 初始化
+                this.uploadInit(editor)
             },
            uploadInit(editor) {
                 // 获取相关 DOM 节点的 ID
@@ -172,11 +186,15 @@
                 return isJPG && isLt2M;
             },
             submit(){
+                
                 let data = {
                     title: this.form.title,
                     cover: this.imageUrl,
                     intro: this.form.intro,
                     content: this.editorContent
+                }
+                if(this.news._id){
+                    data['id'] = this.news._id
                 }
                 this.$store.dispatch('news_submit',data).then(res=>{
                     console.log(res)
