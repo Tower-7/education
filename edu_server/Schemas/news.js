@@ -2,6 +2,7 @@ var mongoose = require('mongoose')
 
 var DbSchema = new mongoose.Schema({
 	title: String,
+	type: String,
     cover: String,
     intro: String,
     content: String,
@@ -39,6 +40,12 @@ DbSchema.statics = {
 	getList: (db,start,num)=>{
 		return db
 		.find()
+		.sort({'meta.updateAt':-1})
+		.skip(start).limit(num);
+	},
+	getListByType: (db,start,num,type)=>{
+		return db
+		.find({type:type})
 		.sort({'meta.updateAt':-1})
 		.skip(start).limit(num);
 	},

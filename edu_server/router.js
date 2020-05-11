@@ -44,7 +44,8 @@ module.exports = (app) => {
 	router.post('/admin/news_edit',Admin.news_edit) //编辑资料
 	router.post('/admin/news_submit',Admin.news_submit) //提交资料
 	router.post('/news_list',Admin.news_list) //资料列表
-	router.get('/news_detail/:id',Admin.news_detail) //资料列表
+	router.post('/newsListByType',Admin.newsListByType) //资料列表
+	router.get('/news_detail/:id',Admin.news_detail) //资料详情
 
 	router.post('/upload',Common.upload)//上传
 

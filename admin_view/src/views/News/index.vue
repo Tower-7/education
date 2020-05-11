@@ -53,13 +53,13 @@
                     </el-table-column>
                     <el-table-column prop="title" label="标题" width="200"> </el-table-column>
                     <el-table-column prop="cover" label="封面" width="200"> 
-                        <template slot-scope="scope"><img :src="scope.row.cover" width="180" /></template>
+                        <template slot-scope="scope"><img :src="scope.row.cover" width="180" ></template>
                     </el-table-column>
                     <el-table-column prop="intro" label="简介" width="400"> </el-table-column>
                     <el-table-column fixed="right" label="操作" width="100">
                         <template slot-scope="scope">
-                            <el-button @click="detail(scope.row._id)" type="text" size="small">查看</el-button>
-                            <el-button type="text" size="small">编辑</el-button>
+                            <el-button @click="detail(scope.row._id)" type="text" size="small">编辑</el-button>
+                            <el-button type="text" size="small">删除</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -99,10 +99,11 @@ export default {
         getNewsList(){
             let data = {
                 start: 0,
-                num: 20
+                num: 20,
+                type: 'news'
             }
             let _this = this
-            this.$store.dispatch('news_list',data).then(res=>{
+            this.$store.dispatch('newsListByType',data).then(res=>{
                 _this.tableData = res.data
                 console.log(res.data)
             })
@@ -120,11 +121,10 @@ export default {
         this.multipleSelection = val;
       },
       add(){
-          this.$store.commit('newsDetail','')
-          this.$router.push('/detail/111')
+          this.$router.push({path:"/detail",query:{id:0,type:"news"}})
       },
       detail(id){
-          this.$router.push(`/detail/${id}`)
+          this.$router.push({path:"/detail",query:{id:id,type:"news"}})
       }
     },
     filters: {
@@ -153,5 +153,10 @@ export default {
 }
 .new-list>div{
     padding: 20px;
+}
+.label-wrap {
+    &.category { @include labelDom(left, 60, 40); }
+    &.date { @include labelDom(right, 93, 40); }
+    &.key-work { @include labelDom(right, 99, 40); }
 }
 </style>

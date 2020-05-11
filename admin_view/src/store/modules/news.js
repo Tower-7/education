@@ -39,6 +39,16 @@ const actions = {
         })
         
     },
+    newsListByType({ commit },o){
+        return new Promise((resolve,reject)=>{
+            apiNews.newsListByType(o).then(res=>{
+                console.log(res);
+                commit('newsList',res.data)
+                resolve(res)
+            })
+        })
+        
+    },
 }
 
 export default {

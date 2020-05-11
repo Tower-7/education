@@ -34,7 +34,7 @@
                 </el-col>
                 <el-col :span="3">&nbsp;</el-col>
                 <el-col :span="3">
-                    <el-button type="danger" class="pull-right" style="width: 100%;" @click="dialog_info = true" >新增</el-button>
+                    <el-button type="danger" class="pull-right" style="width: 100%;" @click="add()" >新增</el-button>
                 </el-col>
             </el-row>
         </el-col>
@@ -44,37 +44,23 @@
             <div class="black-space-30"></div>
             <template>
                 <el-table
-                    :data="tableData"
+                    :data="tableData "
                     border>
-                    <el-table-column
-                    fixed="left"
-                    prop="date"
-                    label="日期"
-                    width="150">
+                    <el-table-column type="selection" width="55"></el-table-column>
+                    <el-table-column type="index" width="100" label="序号"></el-table-column>
+                    <el-table-column width="150" label="发布时间">
+                        <template slot-scope="scope">{{ scope.row.meta.updateAt| formatDate}}</template>
                     </el-table-column>
-                    <el-table-column
-                    prop="name"
-                    label="姓名"
-                    width="120">
+                    <el-table-column prop="title" label="标题" width="200"> </el-table-column>
+                    <el-table-column prop="cover" label="封面" width="200"> 
+                        <template slot-scope="scope"><img :src="scope.row.cover" width="180" ></template>
                     </el-table-column>
-                    <el-table-column
-                    prop="province"
-                    label="省份"
-                    width="120">
-                    </el-table-column>
-                    <el-table-column
-                    prop="city"
-                    label="市区"
-                    width="120">
-                    </el-table-column>
-                    <el-table-column
-                    fixed="right"
-                    label="操作"
-                    width="100">
-                    <template slot-scope="scope">
-                        <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-                        <el-button type="text" size="small">编辑</el-button>
-                    </template>
+                    <el-table-column prop="intro" label="简介" width="400"> </el-table-column>
+                    <el-table-column fixed="right" label="操作" width="100">
+                        <template slot-scope="scope">
+                            <el-button @click="detail(scope.row._id)" type="text" size="small">编辑</el-button>
+                            <el-button type="text" size="small">删除</el-button>
+                        </template>
                     </el-table-column>
                 </el-table>
             </template>
@@ -94,18 +80,6 @@ export default {
         options: [{
           value: '选项1',
           label: '黄金糕'
-        }, {
-          value: '选项2',
-          label: '双皮奶'
-        }, {
-          value: '选项3',
-          label: '蚵仔煎'
-        }, {
-          value: '选项4',
-          label: '龙须面'
-        }, {
-          value: '选项5',
-          label: '北京烤鸭'
         }],
         value: '',
         value1: '',
@@ -116,37 +90,44 @@ export default {
         },
         selectData: {},
         search_keyWork: '',
-        tableData: [{
-          date: '2016-05-02',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1518 弄',
-          zip: 200333
-        }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1517 弄',
-          zip: 200333
-        }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1519 弄',
-          zip: 200333
-        }, {
-          date: '2016-05-03',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1516 弄',
-          zip: 200333
-        }]
+        tableData: []
       }
-    }
+    },
+    created() {
+        this.getNewsList()
+    },
+    methods: {
+        getNewsList(){
+            let data = {
+                start: 0,
+                num: 20,
+                type: 'article'
+            }
+            let _this = this
+            this.$store.dispatch('newsListByType',data).then(res=>{
+                _this.tableData = res.data
+                console.log(res.data)
+            })
+        },
+        toggleSelection(rows) {
+        if (rows) {
+          rows.forEach(row => {
+            this.$refs.multipleTable.toggleRowSelection(row);
+          });
+        } else {
+          this.$refs.multipleTable.clearSelection();
+        }
+      },
+      handleSelectionChange(val) {
+        this.multipleSelection = val;
+      },
+      add(){
+          this.$router.push({path:"/detail",query:{id:0,type:"article"}})
+      },
+      detail(id){
+          this.$router.push({path:"/detail",query:{id:id,type:"article"}})
+      }
+    },
 }
 </script>
 <style lang="scss" scoped>

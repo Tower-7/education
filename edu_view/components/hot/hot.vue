@@ -42,13 +42,13 @@
 			return {
 				date: new Date(),
 				week: '',
-				newList: []
+				newsList: []
 			}
 		},
 		computed:{
-			...mapState({
-				newsList: state => state.news.newsList,
-			}),
+			// ...mapState({
+			// 	newsList: state => state.news.newsList,
+			// }),
 		},
 		mounted() {
 			this.getInit()
@@ -71,11 +71,12 @@
 				let data ={
 					start: 0,
 					num: 20,
+					type: 'news'
 				}
 				let _this = this
 				this.$store.dispatch('getNewsList',data).then(res=>{
-					// _this.newsList = res
-					// console.log(_this.newsList)
+					_this.newsList = res
+					console.log(_this.newsList)
 				})
 			},
 			detail(id){

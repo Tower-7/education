@@ -15,7 +15,7 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    redirect: "login",
+    redirect: "control",
     hidden: true,
   },
   {
@@ -114,16 +114,16 @@ const routes = [
     ]
   },
   {
-    path: "/detail/:id",
+    path: "/detail",
     name: "Detail",
-    redirect: "detailIndex/:id",
+    redirect: "detailIndex",
     meta: {
       name: "文章列表",
     },
     component: Layout,
     children:[
       {
-        path: '/detailIndex/:id',
+        path: '/detailIndex',
         name: 'detailIndex',
         meta: {
           name: '发布文章'

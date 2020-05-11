@@ -1,67 +1,19 @@
 <template>
 	<view class="teacher">
-		<view class="news">
+		<view class="news" v-for="(item,index) in newsList" :key="index"  @click="detail(item._id)">
 			<view class="user_info">
 				<image class="avatar" src="../../static/logo.png" mode=""></image>
 				<text>官方发布</text>
 			</view>
 			<view class="pic">
-				<image src="../../static/home/2.jpg" mode=""></image>
+				<image :src="item.cover" mode=""></image>
 			</view>
 			<view class="title_info">
 				<view class="title">
-					<text>关于春的八卦</text>
+					<text>{{item.title | maxLenghtFilter}}</text>
 				</view>
 				<view class="intro">
-					<text>我们不敢面对粗糙和衰老，以致无法</text>
-				</view>
-			</view>
-			<view class="line-h"></view>
-			<view class="set">
-				<text class="icon">&#xe63e;</text>
-				<text class="icon">&#xe657;</text>
-				<text class="icon">&#xe636;</text>
-			</view>
-		</view>
-		<view class="line-h-b"></view>
-		<view class="news">
-			<view class="user_info">
-				<image class="avatar" src="../../static/logo.png" mode=""></image>
-				<text>官方发布</text>
-			</view>
-			<view class="pic">
-				<image src="../../static/home/2.jpg" mode=""></image>
-			</view>
-			<view class="title_info">
-				<view class="title">
-					<text>关于春的八卦</text>
-				</view>
-				<view class="intro">
-					<text>我们不敢面对粗糙和衰老，以致无法</text>
-				</view>
-			</view>
-			<view class="line-h"></view>
-			<view class="set">
-				<text class="icon">&#xe63e;</text>
-				<text class="icon">&#xe657;</text>
-				<text class="icon">&#xe636;</text>
-			</view>
-		</view>
-		<view class="line-h-b"></view>
-		<view class="news">
-			<view class="user_info">
-				<image class="avatar" src="../../static/logo.png" mode=""></image>
-				<text>官方发布</text>
-			</view>
-			<view class="pic">
-				<image src="../../static/home/2.jpg" mode=""></image>
-			</view>
-			<view class="title_info">
-				<view class="title">
-					<text>关于春的八卦</text>
-				</view>
-				<view class="intro">
-					<text>我们不敢面对粗糙和衰老，以致无法</text>
+					<text>{{item.intro | maxLenghtFilter}}</text>
 				</view>
 			</view>
 			<view class="line-h"></view>
@@ -75,32 +27,42 @@
 </template>
 
 <script>
+	import { mapState } from 'vuex'
 	export default {
 		data() {
 			return {
-				date: new Date(),
-				week: '',
+				newsList: []
 			}
+		},
+		computed:{
+			// ...mapState({
+			// 	newsList: state => state.news.newsList,
+			// }),
 		},
 		mounted() {
 			this.getInit()
 		},
 		methods: {
 			getInit(){
-				let now = new Date();
-				let day = now.getDay();
-				let weeks = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
-				this.week = weeks[day]
-				uni.getSystemInfo({
-				    success: (res)=> {
-				        this.statusBarHeight = res.statusBarHeight + 'px'
-						const query = uni.createSelectorQuery().in(this);
-						query.select('.scroll-h').boundingClientRect(data => {
-						}).exec();
-						
-				    }
-				});
-			}
+				let data ={
+					start: 0,
+					num: 20,
+					type: 'article'
+				}
+				let _this = this
+				this.$store.dispatch('getNewsList',data).then(res=>{
+					_this.newsList = res
+					console.log(_this.newsList)
+				})
+			},
+			detail(id){
+				this.$store.dispatch('getNewsById',id).then((res)=>{
+					uni.navigateTo({
+						url: `../../pages/new_detail/new_detail`
+					})
+				})
+				
+			},
 		},
 		filters:{
 			formatDate: (value)=> {
@@ -111,7 +73,12 @@
 				let d = date.getDate();
 				d = d < 10 ? ('0' + d) : d;
 				return `${y}-${MM}-${d}`;
-			}
+			},
+			maxLenghtFilter:function(value){
+				if(value){
+					return value.substring(0,20) + '...'
+				}
+			},
 		}
 	}
 </script>

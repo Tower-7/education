@@ -7,7 +7,7 @@ webUrl = `/api`
 webUrl = localConfig.websiteUrl
 // #endif
 
-let list_url = `${webUrl}/news_list`
+let list_url = `${webUrl}/newsListByType`
 let detail_url = `${webUrl}/news_detail`
 
 

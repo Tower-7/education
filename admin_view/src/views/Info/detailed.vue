@@ -62,24 +62,29 @@
         }
       },
       mounted() {
-        
+         this.getDetail(this.$route.query.id)
       },
      created(){
          this.getToken()
-         this.getDetail(this.$route.params.id)
          
      },
       methods: {
             getDetail(id){
                 let _this = this
-                this.$store.dispatch('news_detail',id).then(res=>{
-                    _this.news = res
-                    _this.form.title = _this.news.title
-                    _this.imageUrl = _this.news.cover
-                    _this.form.intro = _this.news.intro
-                    _this.editorContent = _this.news.content
-                    _this.createEditor()
-                })
+                if(id != 0){
+                    this.$store.dispatch('news_detail',id).then(res=>{
+                        _this.news = res
+                        _this.form.title = _this.news.title
+                        _this.imageUrl = _this.news.cover
+                        _this.form.intro = _this.news.intro
+                        _this.editorContent = _this.news.content
+                        _this.createEditor()
+                    })
+                }
+                else{
+                     this.createEditor()
+                }
+                
             },
             createEditor(){
                 let _this = this
@@ -189,6 +194,7 @@
                 
                 let data = {
                     title: this.form.title,
+                    type: this.$route.query.type,
                     cover: this.imageUrl,
                     intro: this.form.intro,
                     content: this.editorContent

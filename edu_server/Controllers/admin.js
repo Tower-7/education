@@ -80,6 +80,14 @@ module.exports = {
         let id = ctx.params.id
 		let news = await News.findById(News,id)
 		return ctx.body = {status: 200,data: news}
+    },
+    newsListByType: async(ctx)=>{
+        let data = ctx.request.body
+        let start = data.start
+        let num = data.num
+        let type = data.type
+		let newsList = await News.getListByType(News,start,num,type)
+		return ctx.body = {status: 200,data: newsList}
     }
 
 }

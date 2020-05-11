@@ -39,10 +39,20 @@ function news_detail(o){
         })
     })
 }
-
+function newsListByType(o){
+    return new Promise((resolve,reject)=>{
+        instance.post('/newsListByType',o)
+        .then((res)=>{
+            resolve(res)
+        }).catch((err)=>{
+            reject(err)
+        })
+    })
+}
 
 export default {
     news_submit,
     news_list,
-    news_detail
+    news_detail,
+    newsListByType
 }
