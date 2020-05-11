@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 module.exports = {
     //主页
     index: async ctx => {
-        return ctx.body = {'msg':'测试成功'}
+        await ctx.render('index');
     },
     // 注册
     sign_up: async ctx => {

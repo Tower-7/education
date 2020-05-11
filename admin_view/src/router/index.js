@@ -3,7 +3,6 @@ import VueRouter from "vue-router";
 import Login from "../views/Login";
 import Control from "@/views/control";
 import Layout from "@/views/Layout";
-import Info from "@/views/Info";
 import Detail from "@/views/Info/detailed";
 import Article from "@/views/Article";
 import News from "@/views/News";
